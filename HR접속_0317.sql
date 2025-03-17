@@ -332,7 +332,7 @@ select * from dept;
 select * from employees;
 select * from departments;
 
--- 내부조인, 동등조인(Equal join)
+-- 내부조인, 동등조인(Equi join)
 select * from emp, dept
 where emp.deptno = dept.deptno;
 
