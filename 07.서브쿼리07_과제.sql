@@ -140,5 +140,5 @@ select * from customers;
 
 select * from (SELECT rownum num, o.order_date, c.customer_id, c.customer_name, o.order_amount from orders o
                     join customers c on o.customer_id = c.customer_id
-                order by o.order_date, o.order_amount desc)
+                order by o.order_date, o.order_amount desc) sub
 where num >= 31 and num <= 40;
