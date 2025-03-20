@@ -128,7 +128,14 @@ select * from
              ORDER BY s.birthday) sub
 where num >= 6 and num <= 10;
 
-
+-- 풀이
+select * from
+    (select rownum no, sd.* from 
+        (select rownum, s.studno 학번, s.name 이름, round((sysdate - s.birthday) / 365) 나이 
+            from student s, department d
+            where s.deptno1 = d.deptno
+            order by 나이) sd)
+where no between 6 and 10;
 
 
 -- 11. orders, customers 테이블에서 년도별 고객의 주문금액 주문년도, 고객아이디, 
@@ -142,3 +149,14 @@ select * from (SELECT rownum num, o.order_date, c.customer_id, c.customer_name, 
                     join customers c on o.customer_id = c.customer_id
                 order by o.order_date, o.order_amount desc) sub
 where num >= 31 and num <= 40;
+
+-- 풀이
+select * from
+    (select rownum num, sub.* from
+        (select to_char(o.order_date, 'YYYY') order_year,
+                o.customer_id, c.customer_name, sum(o.order_amount) sum
+        from orders o, customers c
+        where o.customer_id = c.customer_id
+        group by to_char(o.order_date, 'YYYY'), o.customer_id, c.customer_name
+        order by order_year asc, sum desc)sub)
+where num between 21 and 30;
